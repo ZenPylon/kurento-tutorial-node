@@ -14,7 +14,10 @@
  * limitations under the License.
  *
  */
-require('@google-cloud/debug-agent').start({allowExpressions: true});
+require('@google-cloud/debug-agent').start({
+  allowExpressions: true,
+  projectId: 'joedev-165314'
+});
 var path = require('path');
 var url = require('url');
 var express = require('express');
