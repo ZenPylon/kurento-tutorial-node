@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-
+require('@google-cloud/debug-agent').start();
 var path = require('path');
 var url = require('url');
 var express = require('express');
@@ -27,14 +27,14 @@ var https = require('https');
 var argv = minimist(process.argv.slice(2), {
     default: {
         as_uri: 'https://localhost:8443/',
-        ws_uri: 'ws://localhost:8888/kurento'
+        ws_uri: 'wss://localhost:8433/kurento'
     }
 });
 
 var options =
 {
-  key:  fs.readFileSync('keys/server.key'),
-  cert: fs.readFileSync('keys/server.crt')
+  key:  fs.readFileSync('/etc/letsencrypt/live/notingonmymind.com/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/notingonmymind.com/cert.pem')
 };
 
 var app = express();
