@@ -158,7 +158,9 @@ function getKurentoClient(callback) {
         return callback(null, kurentoClient);
     }
 
+	console.log('getKurentoClient called, calling kurento()');
     kurento(argv.ws_uri, function(error, _kurentoClient) {
+		console.log('kurento() callback called');
         if (error) {
             console.log("Could not find media server at address " + argv.ws_uri);
             return callback("Could not find media server at address" + argv.ws_uri
@@ -171,6 +173,7 @@ function getKurentoClient(callback) {
 }
 
 function startPresenter(sessionId, ws, sdpOffer, callback) {
+	console.log('startPresenter called');
 	clearCandidatesQueue(sessionId);
 
 	if (presenter !== null) {
@@ -195,7 +198,10 @@ function startPresenter(sessionId, ws, sdpOffer, callback) {
 			return callback(noPresenterMessage);
 		}
 
+		console.log('trying to create media pipeline');
 		kurentoClient.create('MediaPipeline', function(error, pipeline) {
+			console.log('media pipeline created');
+			console.log(JSON.stringify(pipeline));
 			if (error) {
 				stop(sessionId);
 				return callback(error);
