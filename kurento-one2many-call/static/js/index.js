@@ -15,7 +15,7 @@
  *
  */
 
-var ws = new WebSocket('wss://' + location.hostname + ':8443/one2many');
+var ws = new WebSocket('ws://' + location.hostname + ':8443/one2many');
 var video;
 var webRtcPeer;
 
