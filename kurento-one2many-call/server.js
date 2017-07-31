@@ -25,19 +25,19 @@ var minimist = require('minimist');
 var ws = require('ws');
 var kurento = require('kurento-client');
 var fs    = require('fs');
-var https = require('https');
+var http = require('http');
 
 var argv = minimist(process.argv.slice(2), {
     default: {
-        as_uri: 'https://localhost:8443/',
+        as_uri: 'http://localhost:8443/',
         ws_uri: 'ws://localhost:8888/kurento'
     }
 });
 
 var options =
 {
-  key:  fs.readFileSync('/etc/letsencrypt/live/notingonmymind.com/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/notingonmymind.com/cert.pem')
+//   key:  fs.readFileSync('/etc/letsencrypt/live/notingonmymind.com/privkey.pem'),
+//   cert: fs.readFileSync('/etc/letsencrypt/live/notingonmymind.com/cert.pem')
 };
 
 var app = express();
@@ -57,10 +57,12 @@ var noPresenterMessage = 'No active presenter. Try again later...';
  */
 var asUrl = url.parse(argv.as_uri);
 var port = asUrl.port;
-var server = https.createServer(options, app).listen(port, function() {
+
+console.log('listening on ', port);
+var server = http.createServer(function(req, res) {
     console.log('Kurento Tutorial started');
     console.log('Open ' + url.format(asUrl) + ' with a WebRTC capable browser');
-});
+}).listen(port);
 
 var wss = new ws.Server({
     server : server,
